@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+bundle install
+
+if [ -f package.json ]; then
+  npm install
+fi
+
+export DATABASE_URL=${DATABASE_URL:-postgres://postgres:postgres@localhost:5432/app_development}
+bin/rails db:prepare
+
+printf "\n✅ Setup complete. In VS Code: Run → 'Rails server'. App on port 3000.\n"

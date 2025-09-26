@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Rails server",
+      "type": "ruby",
+      "request": "launch",
+      "program": "${workspaceFolder}/bin/rails",
+      "args": [
+        "server",
+        "-b",
+        "0.0.0.0",
+        "-p",
+        "3000"
+      ],
+      "useBundler": true
+    }
+  ]
+}

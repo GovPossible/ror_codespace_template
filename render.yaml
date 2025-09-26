@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: rails-starter
+    env: ruby
+    plan: starter
+    buildCommand: bundle install && bundle exec rake assets:precompile || true
+    startCommand: bundle exec puma -C config/puma.rb
+    envVars:
+      - key: RAILS_MASTER_KEY
+        sync: false
+      - key: DATABASE_URL
+        fromDatabase: rails-db
+      - key: RAILS_LOG_TO_STDOUT
+        value: "1"
+      - key: RAILS_SERVE_STATIC_FILES
+        value: "true"
+databases:
+  - name: rails-db
+    plan: starter

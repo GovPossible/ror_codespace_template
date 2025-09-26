@@ -1,0 +1,27 @@
+{
+  "name": "Rails Codespace",
+  "image": "mcr.microsoft.com/devcontainers/ruby:3",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {},
+    "ghcr.io/devcontainers/features/postgres:2": {
+      "version": "16"
+    }
+  },
+  "forwardPorts": [
+    3000,
+    5432
+  ],
+  "postCreateCommand": "bash script/init_rails.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "github.copilot",
+        "github.copilot-chat",
+        "Shopify.ruby-lsp",
+        "bung87.rails",
+        "mtxr.sqltools",
+        "ms-azuretools.vscode-docker"
+      ]
+    }
+  }
+}
