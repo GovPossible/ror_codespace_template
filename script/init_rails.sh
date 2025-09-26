@@ -38,7 +38,16 @@ fi
 # Ensure Codespaces hosts allowance is present in development.rb (idempotent)
 if [ -f "config/environments/development.rb" ]; then
   if ! grep -q 'ENV\["CODESPACES"\] == "true"' config/environments/development.rb ; then
-    awk '1; /Rails.application.configure do/ {print "  # Allow all hosts in Codespaces\n  if ENV[\"CODESPACES\"] == \"true\"\n    config.hosts.clear\n  end"; exit}' config/environments/development.rb > /tmp/dev.rb && mv /tmp/dev.rb config/environments/development.rb
+    awk '{
+      print
+      if (!done && $0 ~ /Rails\.application\.configure do/) {
+        print "  # Allow all hosts in Codespaces"
+        print "  if ENV[\"CODESPACES\"] == \"true\""
+        print "    config.hosts.clear"
+        print "  end"
+        done=1
+      }
+    }' config/environments/development.rb > /tmp/dev.rb && mv /tmp/dev.rb config/environments/development.rb
   fi
 fi
 
