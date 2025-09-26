@@ -11,7 +11,8 @@ fi
 if [ ! -f "bin/rails" ] || [ ! -f "config/application.rb" ]; then
   echo "➡️  No Rails app detected. Generating a new Rails app..."
   rm -f .ruby-version # let devcontainer image choose ruby
-  rails new . --force --skip-jbuilder --css tailwind --database=postgresql
+  rails new . --force --skip-jbuilder --css tailwind --database=postgresql --auth
+  bin/rails db:migrate
 fi
 
 # Ensure required gems exist (idempotent)
