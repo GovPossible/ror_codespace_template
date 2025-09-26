@@ -35,5 +35,14 @@ if ! grep -q "root " config/routes.rb ; then
   echo "root 'rails/info#index'" >> config/routes.rb
 fi
 
+
+# Insert custom development.rb config if not present
+CUSTOM_CONFIG="  # Make code changes take effect immediately without server restart.\n  config.enable_reloading = true\n"
+DEV_FILE="config/environments/development.rb"
+if ! grep -q "config.enable_reloading = true" "$DEV_FILE"; then
+  awk -v insert="$CUSTOM_CONFIG" '/Rails.application.configure do/ { print; print insert; next } 1' "$DEV_FILE" > "$DEV_FILE.tmp" && mv "$DEV_FILE.tmp" "$DEV_FILE"
+fi
+
+
 echo "✅ Rails app ready."
 echo "Next: Run → 'Rails server' (port 3000)."
